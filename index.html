@@ -1,89 +1,91 @@
-<html><head><base href="https://webdesign.tutsplus.com/"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Formulaire de Contact - Design Moderne</title>
+<html><head><base href="https://modern-contact-form.example.com/"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Contactez-nous - Design Moderne avec EmailJS</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
 :root {
     --primary-color: #9340FF;
-    --secondary-color: #FF6B6B;
-    --background-color: #101728;
-    --text-color: #FFFFFF;
-    --input-bg: rgba(255, 255, 255, 0.1);
+    --background-color: #F4F7FE;
+    --text-color: #333333;
+    --card-bg: #FFFFFF;
+    --input-bg: #F0F0F0;
+    --success-color: #4CAF50;
+    --error-color: #F44336;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
-    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
 }
 
 .container {
-    width: 90%;
-    max-width: 1200px;
-    display: flex;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    background-color: var(--card-bg);
     border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    transition: all 0.3s ease;
 }
 
-.logo-section {
-    flex: 1;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
 }
 
-.logo {
-    max-width: 80%;
-    height: auto;
-    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
-    transition: transform 0.3s ease;
-}
-
-.logo:hover {
-    transform: scale(1.05);
-}
-
-.form-section {
-    flex: 1;
-    padding: 3rem;
-    background-color: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-}
-
-h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: var(--primary-color);
+.header {
+    background-color: var(--primary-color);
+    padding: 30px;
     text-align: center;
 }
 
+.logo {
+    width: 120px; /* Augmenté de 80px à 120px */
+    height: 120px; /* Augmenté de 80px à 120px */
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 24px;
+    color: white;
+    font-weight: 600;
+}
+
+.form-content {
+    padding: 30px;
+}
+
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
 }
 
 label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 300;
+    margin-bottom: 8px;
+    font-weight: 400;
+    font-size: 14px;
+    color: #666;
 }
 
 input, textarea {
     width: 100%;
-    padding: 1rem;
+    padding: 12px;
+    background-color: var(--input-bg);
     border: none;
     border-radius: 8px;
-    background-color: var(--input-bg);
-    color: var(--text-color);
-    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
     transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
 }
 
 input:focus, textarea:focus {
@@ -92,132 +94,65 @@ input:focus, textarea:focus {
 }
 
 textarea {
-    resize: vertical;
-    min-height: 120px;
+    resize: none;
+    height: 100px;
 }
 
 button {
-    width: 100%;
-    padding: 1rem;
     background-color: var(--primary-color);
-    color: var(--text-color);
+    color: white;
     border: none;
+    padding: 12px;
+    font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 1rem;
-    font-weight: 600;
     transition: all 0.3s ease;
+    font-weight: 600;
+    width: 100%;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 button:hover {
-    background-color: var(--secondary-color);
+    background-color: #7B2BFF;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+    box-shadow: 0 5px 15px rgba(147, 64, 255, 0.4);
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+#success-message, #error-message {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    display: none;
 }
 
-.form-group {
-    animation: fadeInUp 0.5s ease forwards;
-    opacity: 0;
+#success-message {
+    background-color: var(--success-color);
+    color: white;
 }
 
-.form-group:nth-child(1) { animation-delay: 0.1s; }
-.form-group:nth-child(2) { animation-delay: 0.2s; }
-.form-group:nth-child(3) { animation-delay: 0.3s; }
-.form-group:nth-child(4) { animation-delay: 0.4s; }
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .container {
-        width: 95%;
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-    }
-    
-    .logo-section, .form-section {
-        width: 100%;
-    }
-    
-    .logo-section {
-        padding: 2rem 0;
-    }
-    
-    .form-section {
-        padding: 2rem;
-    }
-    
-    h2 {
-        font-size: 2rem;
-    }
+#error-message {
+    background-color: var(--error-color);
+    color: white;
 }
 
 @media (max-width: 480px) {
     .container {
-        width: 100%;
-        border-radius: 0;
-    }
-    
-    .form-section {
-        padding: 1.5rem;
-    }
-    
-    h2 {
-        font-size: 1.8rem;
-    }
-    
-    input, textarea, button {
-        font-size: 0.9rem;
-    }
-}
-
-/* iPhone specific adjustments */
-@media screen and (max-width: 812px) and (orientation: landscape) {
-    body, html {
-        height: auto;
-        min-height: 100vh;
-    }
-    
-    .container {
-        margin: 1rem 0;
-    }
-}
-
-@supports (-webkit-touch-callout: none) {
-    /* CSS specific to iOS devices */
-    input, textarea {
-        font-size: 16px; /* Prevents zoom on focus in iOS */
-    }
-    
-    body {
-        -webkit-overflow-scrolling: touch;
+        width: 90%;
     }
 }
 </style>
 </head>
 <body>
 <div class="container">
-    <div class="logo-section">
-        <img src="https://i.ibb.co/McL1qry/1.png" alt="Logo de la marque" class="logo" width="300" height="300">
-    </div>
-    <div class="form-section">
+    <div class="header">
+        <img src="https://i.ibb.co/McL1qry/1.png" alt="Logo de la marque" class="logo" width="120" height="120">
         <h2>Contactez-nous</h2>
-        <form action="https://example.com/submit-form" method="POST">
+    </div>
+    <div class="form-content">
+        <form id="contact-form">
             <div class="form-group">
                 <label for="name">Nom</label>
                 <input type="text" id="name" name="name" required placeholder="Votre nom">
@@ -227,78 +162,45 @@ button:hover {
                 <input type="email" id="email" name="email" required placeholder="votre@email.com">
             </div>
             <div class="form-group">
-                <label for="subject">Sujet</label>
-                <input type="text" id="subject" name="subject" required placeholder="Objet de votre message">
-            </div>
-            <div class="form-group">
                 <label for="message">Message</label>
                 <textarea id="message" name="message" required placeholder="Votre message ici..."></textarea>
             </div>
-            <button type="submit">Envoyez</button>
+            <button type="submit" id="submit-button">Envoyez</button>
         </form>
+        <div id="success-message">Message envoyé avec succès!</div>
+        <div id="error-message">Une erreur s'est produite. Veuillez réessayer.</div>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
-document.querySelector('form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    alert('Merci pour votre message ! Nous vous contacterons bientôt.');
-    this.reset();
+// Initialisation d'EmailJS
+emailjs.init('R8L0vONdzehaCQe-g');
+
+// Fonction pour envoyer les données du formulaire
+document.getElementById('submit-button').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    // Récupération des données du formulaire
+    const formData = {
+        from_name: document.getElementById('name').value,
+        from_email: document.getElementById('email').value,
+        message: document.getElementById('message').value
+    };
+    
+    // Envoi des données via EmailJS
+    emailjs.send('service_q2sfxgf', 'template_8zj7n6f', formData)
+        .then(function(response) {
+            // Message de confirmation
+            document.getElementById('success-message').style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('contact-form').reset();
+        }, function(error) {
+            // Message d'erreur
+            document.getElementById('error-message').style.display = 'block';
+            document.getElementById('success-message').style.display = 'none';
+        });
 });
-
-const logo = document.querySelector('.logo');
-logo.addEventListener('mouseover', () => {
-    logo.style.filter = 'drop-shadow(0 8px 15px rgba(0, 0, 0, 0.5))';
-});
-logo.addEventListener('mouseout', () => {
-    logo.style.filter = 'drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3))';
-});
-
-const inputs = document.querySelectorAll('input, textarea');
-inputs.forEach(input => {
-    input.addEventListener('focus', () => {
-        input.style.transform = 'scale(1.02)';
-    });
-    input.addEventListener('blur', () => {
-        input.style.transform = 'scale(1)';
-    });
-});
-
-// Ajustements pour les appareils mobiles
-if ('ontouchstart' in window) {
-    document.body.classList.add('touch-device');
-}
-
-// Gestion du redimensionnement de la fenêtre
-window.addEventListener('resize', () => {
-    if (window.innerWidth <= 768) {
-        document.body.classList.add('mobile');
-    } else {
-        document.body.classList.remove('mobile');
-    }
-});
-
-// Vérification initiale de la taille de l'écran
-if (window.innerWidth <= 768) {
-    document.body.classList.add('mobile');
-}
-
-// Gestion du défilement sur iOS
-document.addEventListener('touchmove', function(event) {
-    if (event.scale !== 1) {
-        event.preventDefault();
-    }
-}, { passive: false });
-
-// Désactivation du zoom sur double-tap pour iOS
-let lastTouchEnd = 0;
-document.addEventListener('touchend', function(event) {
-    const now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-    }
-    lastTouchEnd = now;
-}, false);
 </script>
 </body>
 </html>
