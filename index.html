@@ -23,7 +23,7 @@ body, html {
 }
 
 .container {
-    width: 100%;
+    width: 90%;
     max-width: 1200px;
     display: flex;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
@@ -138,6 +138,13 @@ button:hover {
 .form-group:nth-child(3) { animation-delay: 0.3s; }
 .form-group:nth-child(4) { animation-delay: 0.4s; }
 
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        width: 95%;
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
@@ -145,6 +152,60 @@ button:hover {
     
     .logo-section, .form-section {
         width: 100%;
+    }
+    
+    .logo-section {
+        padding: 2rem 0;
+    }
+    
+    .form-section {
+        padding: 2rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        border-radius: 0;
+    }
+    
+    .form-section {
+        padding: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.8rem;
+    }
+    
+    input, textarea, button {
+        font-size: 0.9rem;
+    }
+}
+
+/* iPhone specific adjustments */
+@media screen and (max-width: 812px) and (orientation: landscape) {
+    body, html {
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .container {
+        margin: 1rem 0;
+    }
+}
+
+@supports (-webkit-touch-callout: none) {
+    /* CSS specific to iOS devices */
+    input, textarea {
+        font-size: 16px; /* Prevents zoom on focus in iOS */
+    }
+    
+    body {
+        -webkit-overflow-scrolling: touch;
     }
 }
 </style>
@@ -203,118 +264,41 @@ inputs.forEach(input => {
     });
 });
 
-// Ajout d'un effet de particules dans le fond
-const particlesJS = document.createElement('script');
-particlesJS.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
-document.head.appendChild(particlesJS);
-
-particlesJS.onload = function() {
-    particlesJS.load('particles-js', {
-        "particles": {
-            "number": {
-                "value": 80,
-                "density": {
-                    "enable": true,
-                    "value_area": 800
-                }
-            },
-            "color": {
-                "value": "#ffffff"
-            },
-            "shape": {
-                "type": "circle",
-                "stroke": {
-                    "width": 0,
-                    "color": "#000000"
-                },
-                "polygon": {
-                    "nb_sides": 5
-                }
-            },
-            "opacity": {
-                "value": 0.5,
-                "random": false,
-                "anim": {
-                    "enable": false,
-                    "speed": 1,
-                    "opacity_min": 0.1,
-                    "sync": false
-                }
-            },
-            "size": {
-                "value": 3,
-                "random": true,
-                "anim": {
-                    "enable": false,
-                    "speed": 40,
-                    "size_min": 0.1,
-                    "sync": false
-                }
-            },
-            "line_linked": {
-                "enable": true,
-                "distance": 150,
-                "color": "#ffffff",
-                "opacity": 0.4,
-                "width": 1
-            },
-            "move": {
-                "enable": true,
-                "speed": 6,
-                "direction": "none",
-                "random": false,
-                "straight": false,
-                "out_mode": "out",
-                "bounce": false,
-                "attract": {
-                    "enable": false,
-                    "rotateX": 600,
-                    "rotateY": 1200
-                }
-            }
-        },
-        "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-                "onhover": {
-                    "enable": true,
-                    "mode": "repulse"
-                },
-                "onclick": {
-                    "enable": true,
-                    "mode": "push"
-                },
-                "resize": true
-            },
-            "modes": {
-                "grab": {
-                    "distance": 400,
-                    "line_linked": {
-                        "opacity": 1
-                    }
-                },
-                "bubble": {
-                    "distance": 400,
-                    "size": 40,
-                    "duration": 2,
-                    "opacity": 8,
-                    "speed": 3
-                },
-                "repulse": {
-                    "distance": 200,
-                    "duration": 0.4
-                },
-                "push": {
-                    "particles_nb": 4
-                },
-                "remove": {
-                    "particles_nb": 2
-                }
-            }
-        },
-        "retina_detect": true
-    });
+// Ajustements pour les appareils mobiles
+if ('ontouchstart' in window) {
+    document.body.classList.add('touch-device');
 }
+
+// Gestion du redimensionnement de la fenêtre
+window.addEventListener('resize', () => {
+    if (window.innerWidth <= 768) {
+        document.body.classList.add('mobile');
+    } else {
+        document.body.classList.remove('mobile');
+    }
+});
+
+// Vérification initiale de la taille de l'écran
+if (window.innerWidth <= 768) {
+    document.body.classList.add('mobile');
+}
+
+// Gestion du défilement sur iOS
+document.addEventListener('touchmove', function(event) {
+    if (event.scale !== 1) {
+        event.preventDefault();
+    }
+}, { passive: false });
+
+// Désactivation du zoom sur double-tap pour iOS
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(event) {
+    const now = (new Date()).getTime();
+    if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+    }
+    lastTouchEnd = now;
+}, false);
 </script>
 </body>
 </html>
