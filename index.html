@@ -49,8 +49,8 @@ body, html {
 }
 
 .logo {
-    width: 120px; /* Augmenté de 80px à 120px */
-    height: 120px; /* Augmenté de 80px à 120px */
+    width: 120px;
+    height: 120px;
     object-fit: contain;
     margin-bottom: 15px;
 }
@@ -154,16 +154,24 @@ button:hover {
     <div class="form-content">
         <form id="contact-form">
             <div class="form-group">
-                <label for="name">Nom</label>
-                <input type="text" id="name" name="name" required placeholder="Votre nom">
+                <label for="first-name">Prénom</label>
+                <input type="text" id="first-name" name="first-name" required placeholder="Votre prénom">
             </div>
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="last-name">Nom</label>
+                <input type="text" id="last-name" name="last-name" required placeholder="Votre nom">
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
                 <input type="email" id="email" name="email" required placeholder="votre@email.com">
             </div>
             <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" required placeholder="Votre message ici..."></textarea>
+                <label for="phone">Numéro de téléphone</label>
+                <input type="tel" id="phone" name="phone" required placeholder="Votre numéro de téléphone">
+            </div>
+            <div class="form-group">
+                <label for="company">Nom de l'entreprise</label>
+                <input type="text" id="company" name="company" required placeholder="Nom de votre entreprise">
             </div>
             <button type="submit" id="submit-button">Envoyez</button>
         </form>
@@ -183,9 +191,11 @@ document.getElementById('submit-button').addEventListener('click', function(even
     
     // Récupération des données du formulaire
     const formData = {
-        from_name: document.getElementById('name').value,
-        from_email: document.getElementById('email').value,
-        message: document.getElementById('message').value
+        'first-name': document.getElementById('first-name').value,
+        'last-name': document.getElementById('last-name').value,
+        'email': document.getElementById('email').value,
+        'phone': document.getElementById('phone').value,
+        'company': document.getElementById('company').value
     };
     
     // Envoi des données via EmailJS
