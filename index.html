@@ -174,6 +174,37 @@ button:hover {
     animation: checkmark 0.5s ease-in-out forwards;
 }
 
+.next-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.next-button:hover {
+    background-color: #7B2BFF;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(147, 64, 255, 0.4);
+}
+
+.next-button svg {
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+}
+
 @media (max-width: 480px) {
     .container {
         width: 90%;
@@ -189,27 +220,69 @@ button:hover {
     </div>
     <div class="form-content">
         <form id="contact-form">
-            <div class="form-group">
-                <label for="first-name">Prénom</label>
-                <input type="text" id="first-name" name="first-name" required placeholder="Votre prénom">
+            <div id="step-1" class="form-step">
+                <div class="form-group">
+                    <label for="first-name">Quel est votre prénom ?</label>
+                    <input type="text" id="first-name" name="first-name" required placeholder="Votre prénom">
+                </div>
+                <button type="button" class="next-button" onclick="nextStep(1)">
+                    Suivant
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
             </div>
-            <div class="form-group">
-                <label for="last-name">Nom</label>
-                <input type="text" id="last-name" name="last-name" required placeholder="Votre nom">
+
+            <div id="step-2" class="form-step" style="display:none;">
+                <div class="form-group">
+                    <label for="last-name">Quel est votre nom ?</label>
+                    <input type="text" id="last-name" name="last-name" required placeholder="Votre nom">
+                </div>
+                <button type="button" class="next-button" onclick="nextStep(2)">
+                    Suivant
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
             </div>
-            <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" required placeholder="votre@email.com">
+
+            <div id="step-3" class="form-step" style="display:none;">
+                <div class="form-group">
+                    <label for="email">Quelle est votre adresse e-mail ?</label>
+                    <input type="email" id="email" name="email" required placeholder="votre@email.com">
+                </div>
+                <button type="button" class="next-button" onclick="nextStep(3)">
+                    Suivant
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
             </div>
-            <div class="form-group">
-                <label for="phone">Numéro de téléphone</label>
-                <input type="tel" id="phone" name="phone" required placeholder="Votre numéro de téléphone">
+
+            <div id="step-4" class="form-step" style="display:none;">
+                <div class="form-group">
+                    <label for="phone">Quel est votre numéro de téléphone ?</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="Votre numéro de téléphone">
+                </div>
+                <button type="button" class="next-button" onclick="nextStep(4)">
+                    Suivant
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
             </div>
-            <div class="form-group">
-                <label for="company">Nom de l'entreprise</label>
-                <input type="text" id="company" name="company" required placeholder="Nom de votre entreprise">
+
+            <div id="step-5" class="form-step" style="display:none;">
+                <div class="form-group">
+                    <label for="company">Quel est le nom de votre entreprise ?</label>
+                    <input type="text" id="company" name="company" required placeholder="Nom de votre entreprise">
+                </div>
+                <button type="submit" id="submit-button">Envoyez</button>
             </div>
-            <button type="submit" id="submit-button">Envoyez</button>
         </form>
         <div id="success-message">Message envoyé avec succès!</div>
         <div id="error-message">Une erreur s'est produite. Veuillez réessayer.</div>
@@ -220,6 +293,11 @@ button:hover {
 <script>
 // Initialisation d'EmailJS
 emailjs.init('R8L0vONdzehaCQe-g');
+
+function nextStep(currentStep) {
+    document.getElementById(`step-${currentStep}`).style.display = 'none';
+    document.getElementById(`step-${currentStep + 1}`).style.display = 'block';
+}
 
 // Fonction pour envoyer les données du formulaire
 document.getElementById('contact-form').addEventListener('submit', function(event) {
