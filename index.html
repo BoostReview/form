@@ -59,6 +59,7 @@ h2 {
     font-size: 24px;
     color: white;
     font-weight: 600;
+    margin-bottom: 15px;
 }
 
 .form-content {
@@ -138,6 +139,41 @@ button:hover {
     color: white;
 }
 
+.thank-you-content {
+    padding: 30px;
+    text-align: center;
+}
+
+.icon {
+    font-size: 48px;
+    color: var(--success-color);
+    margin-bottom: 20px;
+}
+
+.thank-you-content p {
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+@keyframes checkmark {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.animated {
+    animation: checkmark 0.5s ease-in-out forwards;
+}
+
 @media (max-width: 480px) {
     .container {
         width: 90%;
@@ -186,7 +222,7 @@ button:hover {
 emailjs.init('R8L0vONdzehaCQe-g');
 
 // Fonction pour envoyer les données du formulaire
-document.getElementById('submit-button').addEventListener('click', function(event) {
+document.getElementById('contact-form').addEventListener('submit', function(event) {
     event.preventDefault();
     
     // Récupération des données du formulaire
@@ -201,10 +237,24 @@ document.getElementById('submit-button').addEventListener('click', function(even
     // Envoi des données via EmailJS
     emailjs.send('service_q2sfxgf', 'template_8zj7n6f', formData)
         .then(function(response) {
-            // Message de confirmation
-            document.getElementById('success-message').style.display = 'block';
-            document.getElementById('error-message').style.display = 'none';
-            document.getElementById('contact-form').reset();
+            // Affichage de la page de remerciement
+            document.querySelector('.container').innerHTML = `
+                <div class="header">
+                    <img src="https://i.ibb.co/McL1qry/1.png" alt="Logo de la marque" class="logo" width="120" height="120">
+                    <h2>Merci de nous avoir contactés !</h2>
+                </div>
+                <div class="thank-you-content">
+                    <div class="icon animated">&#10004;</div>
+                    <p>Nous avons bien reçu votre message et nous vous remercions de l'intérêt que vous portez à notre entreprise.</p>
+                    <p>Notre équipe examinera attentivement votre demande et vous recontactera dans les plus brefs délais.</p>
+                    <p>À bientôt !</p>
+                </div>
+            `;
+            
+            // Redirection vers boostreview.org après 10 secondes
+            setTimeout(function() {
+                window.location.href = 'https://boostreview.org';
+            }, 10000);
         }, function(error) {
             // Message d'erreur
             document.getElementById('error-message').style.display = 'block';
